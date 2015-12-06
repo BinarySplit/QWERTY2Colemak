@@ -102,8 +102,6 @@ Enter::Enter
 ;Space::Space
 
 ^+Esc::RunTaskMgr()
-;^!NumpadDiv::SetFullscreenWindowedA()
-;^!NumpadMult::SetFullscreenWindowedB()
 
 #If
 
@@ -136,11 +134,7 @@ SetFullscreenWindowedB()
 	}  
 }
 
-
 ; http://www.autohotkey.com/board/topic/85313-capturing-the-screen-mouse-keyboard-at-the-same-time/
-^!NumpadDiv::DisableMouseCapture()
-^!NumpadMult::EnableMouseCapture()
-
 EnableMouseCapture()
 {
 	global hHookMouse, hHookMouseWin
@@ -204,6 +198,27 @@ CallNextHookEx(nCode, wParam, lParam, hHook = 0)
 {
 	Return DllCall("CallNextHookEx", "Uint", hHook, "int", nCode, "Uint", wParam, "Uint", lParam)
 }
+
+;;App Volume Controls - requires nircmd in current directory
+LowerAppVolume()
+{
+	Run, ".\nircmd\nircmd.exe" changeappvolume focused -0.1
+}
+
+RaiseAppVolume()
+{
+	Run, ".\nircmd\nircmd.exe" changeappvolume focused +0.1
+}
+
+;;Fxtra functions - uncomment as needed
+;^!NumpadDiv::SetFullscreenWindowedA()
+;^!NumpadMult::SetFullscreenWindowedB()
+;^!NumpadDiv::DisableMouseCapture()
+;^!NumpadMult::EnableMouseCapture()
+^!NumpadDiv::LowerAppVolume()
+^!NumpadMult::RaiseAppVolume()
+
+
 
 Return
 DoCleanup:
